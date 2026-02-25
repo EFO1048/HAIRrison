@@ -35,7 +35,7 @@ body {
         "menu content"
         "footer footer";
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 3px;
+    gap: 10px;
     padding: 5px;
 }
 
@@ -68,6 +68,11 @@ body {
     padding: 0;
 }
 
+.container:nth-of-type(5) {
+    grid-column: 2 / 3;
+    grid-row: 1;
+}
+
 .containerLabel {
     position: absolute;
     top: -25px;
@@ -84,16 +89,73 @@ body {
     font-weight: bold;
     cursor: pointer;
     border-radius: 0;
-    border: 3px solid #7f7f7f;
+    border: 2px solid #7f7f7f;
     background: linear-gradient(0deg,rgba(176, 176, 176, 1) 0%, rgba(196, 196, 196, 1) 100%);
 }
 
 .btn:active {
-    border: 3px solid #7f7f7f;
+    border: 2px solid #7f7f7f;
     background: linear-gradient(0deg,rgba(176, 176, 176, 1) 100%, rgba(196, 196, 196, 1) 0%);
 }
 
 .btn:disabled {
+    cursor: not-allowed;
+}
+
+.fullBtnContainer {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.startBtn {
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0;
+    border: 2px solid #508465;
+    background: linear-gradient(0deg,rgba(186, 255, 181, 1) 0%, rgba(224, 255, 228, 1) 100%);
+}
+
+.stopBtn {
+    font-size: 20px;
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0;
+    border: 2px solid #793c3c;
+    background: linear-gradient(0deg,rgba(255, 125, 125, 1) 0%, rgba(255, 224, 224, 1) 100%);
+}
+
+.stateBtnContainer {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stateBtn {
+    font-size: 20px;
+    width: 150px;
+    padding: 10px 20px 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0;
+    border: 2px solid #7f7f7f;
+    background: linear-gradient(0deg,rgba(176, 176, 176, 1) 0%, rgba(196, 196, 196, 1) 100%);
+}
+
+.stateBtn:active {
+    border: 3px solid #7f7f7f;
+    background: linear-gradient(0deg,rgba(176, 176, 176, 1) 100%, rgba(196, 196, 196, 1) 0%);
+}
+
+.stateBtn:disabled {
     cursor: not-allowed;
 }
 
