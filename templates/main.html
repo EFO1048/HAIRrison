@@ -6,16 +6,62 @@
 <body>
 
   <h1 class="title">HAIRrison: The Pony Pal</h1>
+
   <div class="content">
+
+    <!-- HEIGHT CONTAINER -->
     <div class="container">
-      <p id="status">Please WHAT device is connected before proceeding</p>
-      <div id="connSpinner" class="loader"></div>
-      <button id="connectBtn" class="btn">Test Connection</button>
-      <button id="continueBtn" style="display: none" class="btn">Continue</button>
-      
+      <p class="containerLabel">Device Height</p>
+      <p style="margin-bottom:-5px">Please enter the desired height of the device:</p>
+      <br />
+      <input type="number" id="height" name="height" min="0" value="5">
+      <span class="unit">cm [CHANGE THIS??]</span>
     </div>
+
+    <!-- DEVICE MODE CONTAINER -->
+    <div class="container">
+      <p class="containerLabel">Device Mode</p>
+      <input type="radio" id="fullWalkthrough" name="fullWalkthrough" value="fullWalkthrough">
+      <label for="fullWalkthrough">Full Walkthrough</label>
+      <br>
+      <input type="radio" id="stateByState" name="stateByState" value="stateByState">
+      <label for="fullWalkthrough">State-By-State</label>
+    </div>
+
+    <!-- DEVICE CONTROLS CONTAINER -->
+    <div class="container">
+      <p class="containerLabel">Device Controls</p>
+
+      <!-- Full state buttons -->
+      <div class="fullBtnContainer">
+        <button id="fullStart" class="startBtn">START</button>
+        <button id="fullStop" class="stopBtn">STOP</button>
+      </div>
+
+      <!-- State-by-state buttons -->
+       <div class="stateBtnContainer">
+        <button id="state1" class="stateBtn">State 1</button>
+        <button id="state2" class="stateBtn">State 2</button>
+        <button id="state4" class="stateBtn">State 3</button>
+        <button id="state4" class="stateBtn">State 4</button>
+      </div>
+
+    </div>
+
+    <!-- PROGRESS AND TIMER CONTAINER -->
+    <div class="container">
+      <div class="progressContainer">
+        <span style="font-weight:bold; float:left">Progress</span>
+        <span style="font-style:italic; float:right">0:00</span>
+        <span id="timer" style="font-style:italic; float:right">Time Elapsed:&nbsp;</span>
+        <progress id="progress" value="80" max="100"></progress>
+      </div>
+    </div>
+
+
+
   </div>
   
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="{{ url_for('static', filename='mainScript.js') }}"></script>
 </body>
 </html>
