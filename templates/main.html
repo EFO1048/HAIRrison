@@ -2,9 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <title>HAIRrison: The Pony Pal</title>
 </head>
 <body>
-
+  <img src="/static/logo.png" />
   <h1 class="title">HAIRrison: The Pony Pal</h1>
 
   <div class="content">
@@ -21,11 +22,11 @@
     <!-- DEVICE MODE CONTAINER -->
     <div class="container">
       <p class="containerLabel">Device Mode</p>
-      <input type="radio" id="fullWalkthrough" name="fullWalkthrough" value="fullWalkthrough">
+      <input type="radio" id="fullWalkthrough" name="state" value="fullWalkthrough" checked="checked">
       <label for="fullWalkthrough">Full Walkthrough</label>
       <br>
-      <input type="radio" id="stateByState" name="stateByState" value="stateByState">
-      <label for="fullWalkthrough">State-By-State</label>
+      <input type="radio" id="stateByState" name="state" value="stateByState">
+      <label for="stateByState">State-By-State</label>
     </div>
 
     <!-- DEVICE CONTROLS CONTAINER -->
@@ -40,15 +41,15 @@
 
       <!-- State-by-state buttons -->
        <div class="stateBtnContainer">
-        <button id="state1" class="stateBtn">State 1</button>
-        <button id="state2" class="stateBtn">State 2</button>
-        <button id="state4" class="stateBtn">State 3</button>
-        <button id="state4" class="stateBtn">State 4</button>
+        <button id="state1" class="stateBtn" disabled="disabled">State 1</button>
+        <button id="state2" class="stateBtn" disabled="disabled">State 2</button>
+        <button id="state3" class="stateBtn" disabled="disabled">State 3</button>
+        <button id="state4" class="stateBtn" disabled="disabled">State 4</button>
       </div>
 
     </div>
 
-    <!-- DEVICE INFO -->
+    <!-- PROGRESS AND TIMER CONTAINER -->
     <div class="container">
       <div class="progressContainer">
         <span style="font-weight:bold; float:left">Progress</span>
@@ -58,9 +59,11 @@
       </div>
     </div>
 
-    <!-- PROGRESS AND TIMER CONTAINER -->
+
+    <!-- DEVICE INFO -->
     <div class="container">
       <p class="containerLabel">Device Info</p>
+      
     </div>
 
 
