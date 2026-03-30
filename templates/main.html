@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/main.css">
     <title>HAIRrison: The Pony Pal</title>
 </head>
 <body>
-  <img src="/static/logo.png" />
   <h1 class="title">HAIRrison: The Pony Pal</h1>
 
   <div class="content">
 
-    <!-- HEIGHT CONTAINER -->
-    <div class="container">
-      <p class="containerLabel">Device Height</p>
-      <p style="margin-bottom:-5px">Please enter the desired height of the device:</p>
-      <br />
-      <input type="number" id="height" name="height" min="0" value="5">
-      <span class="unit">cm [CHANGE THIS??]</span>
-    </div>
-
-    <!-- DEVICE MODE CONTAINER -->
-    <div class="container">
-      <p class="containerLabel">Device Mode</p>
-      <input type="radio" id="fullWalkthrough" name="state" value="fullWalkthrough" checked="checked">
-      <label for="fullWalkthrough">Full Walkthrough</label>
-      <br>
-      <input type="radio" id="stateByState" name="state" value="stateByState">
-      <label for="stateByState">State-By-State</label>
-    </div>
-
-    <!-- DEVICE CONTROLS CONTAINER -->
-    <div class="container">
-      <p class="containerLabel">Device Controls</p>
-
-      <!-- Full state buttons -->
-      <div class="fullBtnContainer">
-        <button id="fullStart" class="startBtn">START</button>
-        <button id="fullStop" class="stopBtn">STOP</button>
+      <!-- HEIGHT CONTAINER -->
+      <div class="container">
+          <p class="containerLabel">Device Height</p>
+          <p style="margin-bottom:-5px">Please enter the desired height of the device:</p>
+          <br />
+          <input type="number" id="height" name="height" min="0" value="5">
+          <span class="unit">cm [CHANGE THIS??]</span>
       </div>
 
-      <!-- State-by-state buttons -->
-       <div class="stateBtnContainer">
-        <button id="state1" class="stateBtn" disabled="disabled">State 1</button>
-        <button id="state2" class="stateBtn" disabled="disabled">State 2</button>
-        <button id="state3" class="stateBtn" disabled="disabled">State 3</button>
-        <button id="state4" class="stateBtn" disabled="disabled">State 4</button>
+      <!-- DEVICE MODE CONTAINER -->
+      <div class="container">
+          <p class="containerLabel">Device Mode</p>
+          <input type="radio" id="fullWalkthrough" name="state" value="fullWalkthrough" checked="checked">
+          <label for="fullWalkthrough">Full Walkthrough</label>
+          <br>
+          <input type="radio" id="stateByState" name="state" value="stateByState">
+          <label for="stateByState">State-By-State</label>
       </div>
 
-    </div>
+      <!-- DEVICE CONTROLS CONTAINER -->
+      <div class="container">
+          <p class="containerLabel">Device Controls</p>
 
-    <!-- PROGRESS AND TIMER CONTAINER -->
-    <div class="container">
-      <div class="progressContainer">
-        <span style="font-weight:bold; float:left">Progress</span>
-        <span style="font-style:italic; float:right">0:00</span>
-        <span id="timer" style="font-style:italic; float:right">Time Elapsed:&nbsp;</span>
-        <progress id="progress" value="80" max="100"></progress>
+          <!-- Full state buttons -->
+          <div class="fullBtnContainer">
+              <button id="fullStart" class="startBtn">START</button>
+              <button id="fullStop" class="stopBtn" disabled>STOP</button>
+          </div>
+
+          <!-- State-by-state buttons -->
+          <div class="stateBtnContainer">
+              <button id="state1" class="stateBtn" disabled="disabled">State 1</button>
+              <button id="state2" class="stateBtn" disabled="disabled">State 2</button>
+              <button id="state3" class="stateBtn" disabled="disabled">State 3</button>
+              <button id="state4" class="stateBtn" disabled="disabled">State 4</button>
+          </div>
+
       </div>
-    </div>
+
+      <!-- PROGRESS AND TIMER CONTAINER -->
+      <div class="container">
+          <div class="progressContainer">
+              <span style="font-weight:bold; float:left">Progress</span>
+              <span id="timer" style="font-style:italic; float:right">0:00</span>
+              <span id="timeElapsed" style="font-style:italic; float:right">Time Elapsed:&nbsp;</span>
+              <progress id="progress"></progress>
+          </div>
+      </div>
 
 
-    <!-- DEVICE INFO -->
-    <div class="container">
-      <p class="containerLabel">Device Info</p>
-      
-    </div>
-
-
+      <!-- DEVICE INFO -->
+      <div class="container">
+          <p class="containerLabel">Device Info</p>
+          <div class="infoContainer">
+              <!-- populated by renderSensors() -->
+          </div>
+          <div class="exportBtnWrapper">
+              <button id="exportBtn" class="exportBtn" onclick="exportToCSV()" disabled>Export to CSV</button>
+          </div>
+      </div>
 
   </div>
   
   <script src="{{ url_for('static', filename='mainScript.js') }}"></script>
+  <!-- <script src="../static/mainScript.js"></script> -->
 </body>
 </html>
