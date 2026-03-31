@@ -25,7 +25,7 @@ class ArduinoListener(threading.Thread):
     def find_arduino_port(self):
         ports = serial.tools.list_ports.comports()
 
-        print("THIS IS RUNNING \n\n\n\n\n", ports)
+        print("LISTENER STARTING: \n\n\n\n\n", ports)
 
         # https://pyserial.readthedocs.io/en/latest/tools.html#serial.tools.list_ports.ListPortInfo
         # IDK what arduino would look like
@@ -51,6 +51,14 @@ class ArduinoListener(threading.Thread):
         self.ser = serial.Serial(port=port, baudrate=baud, timeout=1)
         time.sleep(3)
         print("Connected to board")
+        return self.ser
+
+    # this is for connect route just literally check if it is good to go
+    def check_connection(self):
+        if not self.ser:
+            return False
+
+        return True
 
     def run(self):
 

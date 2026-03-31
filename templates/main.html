@@ -1,78 +1,184 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../static/main.css">
+  <head>
+    <link rel="stylesheet" type="text/css" href="../static/main.css" />
     <title>HAIRrison: The Pony Pal</title>
-</head>
-<body>
-  <h1 class="title">HAIRrison: The Pony Pal</h1>
+  </head>
+  <body>
+    <h1 class="title">HAIRrison: The Pony Pal</h1>
 
-  <div class="content">
-
+    <div class="content">
       <!-- HEIGHT CONTAINER -->
       <div class="container">
-          <p class="containerLabel">Device Height</p>
-          <p style="margin-bottom:-5px">Please enter the desired height of the device:</p>
-          <br />
-          <input type="number" id="height" name="height" min="0" value="5">
-          <span class="unit">cm [CHANGE THIS??]</span>
+        <p class="containerLabel">Device Height</p>
+        <p style="margin-bottom: -5px">
+          Please enter the desired height of the device:
+        </p>
+        <br />
+        <input type="number" id="height" name="height" min="0" value="5" />
+        <span class="unit">cm [CHANGE THIS??]</span>
       </div>
 
       <!-- DEVICE MODE CONTAINER -->
       <div class="container">
-          <p class="containerLabel">Device Mode</p>
-          <input type="radio" id="fullWalkthrough" name="state" value="fullWalkthrough" checked="checked">
-          <label for="fullWalkthrough">Full Walkthrough</label>
-          <br>
-          <input type="radio" id="stateByState" name="state" value="stateByState">
-          <label for="stateByState">State-By-State</label>
+        <p class="containerLabel">Device Mode</p>
+        <input
+          type="radio"
+          id="fullWalkthrough"
+          name="state"
+          value="fullWalkthrough"
+          checked="checked"
+        />
+        <label for="fullWalkthrough">Full Walkthrough</label>
+        <br />
+        <input
+          type="radio"
+          id="stateByState"
+          name="state"
+          value="stateByState"
+        />
+        <label for="stateByState">State-By-State</label>
       </div>
 
       <!-- DEVICE CONTROLS CONTAINER -->
       <div class="container">
-          <p class="containerLabel">Device Controls</p>
+        <p class="containerLabel">Device Controls</p>
 
-          <!-- Full state buttons -->
-          <div class="fullBtnContainer">
-              <button id="fullStart" class="startBtn">START</button>
-              <button id="fullStop" class="stopBtn" disabled>STOP</button>
-          </div>
+        <!-- Full state buttons -->
+        <div class="fullBtnContainer">
+          <button id="fullStart" class="startBtn">START</button>
+          <button id="fullStop" class="stopBtn" disabled>STOP</button>
+        </div>
 
-          <!-- State-by-state buttons -->
-          <div class="stateBtnContainer">
-              <button id="state1" class="stateBtn" disabled="disabled">State 1</button>
-              <button id="state2" class="stateBtn" disabled="disabled">State 2</button>
-              <button id="state3" class="stateBtn" disabled="disabled">State 3</button>
-              <button id="state4" class="stateBtn" disabled="disabled">State 4</button>
-          </div>
-
+        <!-- State-by-state buttons -->
+        <div class="stateBtnContainer">
+          <button id="state1" class="stateBtn" disabled="disabled">
+            State 1
+          </button>
+          <button id="state2" class="stateBtn" disabled="disabled">
+            State 2
+          </button>
+          <button id="state3" class="stateBtn" disabled="disabled">
+            State 3
+          </button>
+          <button id="state4" class="stateBtn" disabled="disabled">
+            State 4
+          </button>
+        </div>
       </div>
 
       <!-- PROGRESS AND TIMER CONTAINER -->
       <div class="container">
-          <div class="progressContainer">
-              <span style="font-weight:bold; float:left">Progress</span>
-              <span id="timer" style="font-style:italic; float:right">0:00</span>
-              <span id="timeElapsed" style="font-style:italic; float:right">Time Elapsed:&nbsp;</span>
-              <progress id="progress"></progress>
-          </div>
+        <div class="progressContainer">
+          <span style="font-weight: bold; float: left">Progress</span>
+          <span id="timer" style="font-style: italic; float: right">0:00</span>
+          <span id="timeElapsed" style="font-style: italic; float: right"
+            >Time Elapsed:&nbsp;</span
+          >
+          <progress id="progress"></progress>
+        </div>
       </div>
 
+      <!--
+        QUESTIONS:
+        1) How satisfied were you with the results?
+            A: Scale of 1-5
+        2) How much of the hair was collected? 
+            A: 100% 50% 0 %      
+      -->
 
       <!-- DEVICE INFO -->
       <div class="container">
-          <p class="containerLabel">Device Info</p>
-          <div class="infoContainer">
-              <!-- populated by renderSensors() -->
-          </div>
-          <div class="exportBtnWrapper">
-              <button id="exportBtn" class="exportBtn" onclick="exportToCSV()" disabled>Export to CSV</button>
-          </div>
-      </div>
+        <p class="containerLabel">Device Info</p>
+        <div class="infoContainer">
+          <!-- populated by renderSensors() -->
+        </div>
 
-  </div>
-  
-  <script src="{{ url_for('static', filename='mainScript.js') }}"></script>
-  <!-- <script src="../static/mainScript.js"></script> -->
-</body>
+        <!-- How satisfied were you with the results? -->
+        <br />
+        <b>How satisfied were you with the results?</b>
+        <br />
+        <br />
+
+        <input
+          type="radio"
+          id="satisfied5"
+          name="satisfied"
+          value="5"
+          checked="checked"
+        />
+        <label for="satisfied5"><i>5 - Highly Satisfied</i></label>
+        <br />
+
+        <input type="radio" id="satisfied4" name="satisfied" value="4" />
+        <label for="satisfied4"><i>4 - Satisfied</i></label>
+        <br />
+
+        <input type="radio" id="satisfied3" name="satisfied" value="3" />
+        <label for="satisfied3"><i>3 - Neutral</i></label>
+        <br />
+
+        <input type="radio" id="satisfied2" name="satisfied" value="2" />
+        <label for="satisfied2"><i>2 - Dissatisfied</i></label>
+        <br />
+
+        <input type="radio" id="satisfied1" name="satisfied" value="1" />
+        <label for="satisfied1"><i>1 - Very Dissatisfied</i></label>
+        <br />
+
+        <br />
+        <b>How much of the hair was pulled back?</b>
+        <br />
+        <br />
+
+        <input
+          type="radio"
+          id="percentHair100"
+          name="percentHair"
+          value="100"
+          checked
+        />
+        <label for="percentHair100"><i>100%</i></label>
+        <br />
+
+        <input
+          type="radio"
+          id="percentHair50"
+          name="percentHair"
+          value="50"
+        />
+        <label for="percentHair50"><i>50%</i></label>
+        <br />
+
+        <input
+          type="radio"
+          id="percentHair0"
+          name="percentHair"
+          value="0"
+        />
+        <label for="percentHair0"><i>0%</i></label>
+        <br />
+
+        <br />
+        <b>Distance between front of hair and ponytail (whatever units)</b>
+        <br />
+        <br />
+
+        <input type="number" id="distance" name="distance" min="0" value="5" />
+        <span class="unit">cm [CHANGE THIS??]</span>
+
+        <br />
+        <br />
+
+        <div class="exportBtnWrapper">
+          <button id="exportBtn" class="exportBtn" onclick="exportToCSV()">
+            Export to CSV
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='mainScript.js') }}"></script>
+    <!-- <script src="../static/mainScript.js"></script> -->
+  </body>
 </html>

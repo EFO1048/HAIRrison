@@ -1,93 +1,111 @@
 // DUMMY TEST DATA FOR LATER:
 const estimateData = {
     time: {
-        "fullWalkthrough": "0:10",
-        "state1": "1:00",
-        "state2": "0:35",
-        "state3": "0:47",
-        "state4": "1:00"
+        fullWalkthrough: "0:10",
+        state1: "1:00",
+        state2: "0:35",
+        state3: "0:47",
+        state4: "1:00",
     },
     measurements: {
-        "sensor1": 100,
-        "sensor2": 50
-    }
+        sensor1: 100,
+        sensor2: 50,
+    },
 };
 
 // DUMMY TEST DATA FOR SENSORS
 const sensorData = {
-    "height": null,
-    "runMode": null,
-    "state": null,
-    "data": [
+    height: null,
+    runMode: null,
+    state: null,
+    data: [
         {
-            "sensor": 1,
-            "currReading": 10
+            sensor: 1,
+            currReading: 10,
         },
         {
-            "sensor": 2,
-            "currReading": 78
+            sensor: 2,
+            currReading: 78,
         },
         {
-            "sensor": 3,
-            "currReading": 57
+            sensor: 3,
+            currReading: 57,
         },
         {
-            "sensor": 4,
-            "currReading": 23
-        }
-    ]
-}
+            sensor: 4,
+            currReading: 23,
+        },
+    ],
+};
 
 // fetch estimate data
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
     // going to run once and combine empty logic
     renderSensors();
 
-
     // needed to separate these because btn is out of the dom
-    const connectBtn = document.getElementById("connectBtn")
+    const connectBtn = document.getElementById("connectBtn");
     if (connectBtn) {
         connectBtn.addEventListener("click", testConnection);
     }
 
     // radio buttons for state by state or full
-    document.getElementById("fullWalkthrough").addEventListener("click",disableStateStart);
-    document.getElementById("stateByState").addEventListener("click", enableStateStart);
+    document
+        .getElementById("fullWalkthrough")
+        .addEventListener("click", disableStateStart);
+    document
+        .getElementById("stateByState")
+        .addEventListener("click", enableStateStart);
 
     // full start and stop
-    document.getElementById("fullStart").addEventListener("click", function(event) {
-        fullStart()
-    });
+    document
+        .getElementById("fullStart")
+        .addEventListener("click", function (event) {
+            fullStart();
+        });
 
-    document.getElementById("fullStop").addEventListener("click", function(event){
-        fullStop();
-    });
+    document
+        .getElementById("fullStop")
+        .addEventListener("click", function (event) {
+            fullStop();
+        });
 
     // state buttons
-    document.getElementById("state1").addEventListener("click", function (event) {
-        selectState(this);
-        stateStart(event, 1)
-    });
-    document.getElementById("state2").addEventListener("click", function (event) {
-        selectState(this);
-        stateStart(event, 2)
-    });
-    document.getElementById("state3").addEventListener("click", function (event) {
-        selectState(this);
-        stateStart(event, 3)
-    });
-    document.getElementById("state4").addEventListener("click", function (event) {
-        selectState(this);
-        stateStart(event, 4)
-    });
+    document
+        .getElementById("state1")
+        .addEventListener("click", function (event) {
+            selectState(this);
+            stateStart(event, 1);
+        });
+    document
+        .getElementById("state2")
+        .addEventListener("click", function (event) {
+            selectState(this);
+            stateStart(event, 2);
+        });
+    document
+        .getElementById("state3")
+        .addEventListener("click", function (event) {
+            selectState(this);
+            stateStart(event, 3);
+        });
+    document
+        .getElementById("state4")
+        .addEventListener("click", function (event) {
+            selectState(this);
+            stateStart(event, 4);
+        });
 
-    
+    // export csv
+    document
+        .getElementById("exportBtn")
+        .addEventListener("click", function (event) {
+            exportToCSV();
+        });
 });
 
-// enable all of the state by state buttons 
+// enable all of the state by state buttons
 // disable start and stop but they'd be re-enabled once
 // you choose a state later on
 function enableStateStart() {
@@ -120,22 +138,42 @@ function disableStateStart() {
     }
 }
 
-async function stateStart(stateNum) {
-    
-
-
-}
+async function stateStart(stateNum) {}
 
 async function fullStart() {
+    console.log("HELLO");
     const startBtn = document.getElementById("fullStart");
     const stopBtn = document.getElementById("fullStop");
     // disable during run
     startBtn.disabled = true;
     stopBtn.disabled = false;
 
-    startProgress('full');
+    const deviceHeight = document.getElementById("height").value;
 
-    startTimer('restart')
+    // send POST request for send
+    // will need device height included in payload
+    const payload = {
+        height: deviceHeight,
+        runMode: 0,
+        state: null,
+        data: {},
+    };
+
+    const response = await fetch("/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    startProgress("full");
+
+    startTimer("restart");
+
+    return data;
 }
 
 async function fullStop() {
@@ -144,7 +182,7 @@ async function fullStop() {
     // disable while still stopping
     stopBtn.disabled = true;
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // enable after you're done
     startBtn.disabled = false;
@@ -154,9 +192,11 @@ async function fullStop() {
 }
 
 async function loadSensorData() {
-    const newData = setInterval(function() {
-        alert('heyyy')
-    }).then(function (response) { return response.json(); })
+    const newData = setInterval(function () {
+        alert("heyyy");
+    }).then(function (response) {
+        return response.json();
+    });
 }
 
 async function testConnection() {
@@ -171,7 +211,7 @@ async function testConnection() {
     showSpinner();
 
     const response = await fetch("/connect", {
-        method: "POST"
+        method: "POST",
     });
 
     const data = await response.json();
@@ -191,12 +231,12 @@ async function testConnection() {
 // just keep it clicked
 function selectState(btn) {
     // deselect all state buttons first
-    document.querySelectorAll(".stateBtn").forEach(b => b.classList.remove("active"));
+    document
+        .querySelectorAll(".stateBtn")
+        .forEach((b) => b.classList.remove("active"));
     // select the clicked one
     btn.classList.add("active");
 }
-
-
 
 // Show progress bar while loading
 function showSpinner() {
@@ -215,7 +255,6 @@ function continueOn() {
 
 // PROGRESS BAR AND TIMERS
 
-
 var timeElapsed = 0;
 var myTimer;
 var myProgress;
@@ -233,11 +272,11 @@ function tick() {
 }
 
 function startTimer(mode) {
-    if (mode === 'restart') {
+    if (mode === "restart") {
         timeElapsed = 0;
     }
 
-    myTimer = setInterval(tick, 1000)
+    myTimer = setInterval(tick, 1000);
 }
 
 function stopTimer() {
@@ -249,24 +288,23 @@ function startProgress(mode, state) {
     var estimatedTime;
 
     // determine if full or state by state
-    if (mode === 'full') {
+    if (mode === "full") {
         estimatedTime = estimateData.time.fullWalkthrough;
-    } else if (mode === 'state') {
+    } else if (mode === "state") {
         estimatedTime = estimateData.time["state" + state];
     }
-        
 
     // convert normal time format to one number
     const [mins, secs] = estimatedTime.split(":").map(Number);
-    const totalSeconds = (mins * 60) + secs;
+    const totalSeconds = mins * 60 + secs;
 
     // initialize start and max value
     const progressBar = document.getElementById("progress");
     progressBar.value = 0;
     progressBar.max = totalSeconds;
 
-    // use same method for normal timer 
-    myProgress = setInterval(function() {
+    // use same method for normal timer
+    myProgress = setInterval(function () {
         if (timeElapsed >= totalSeconds) {
             clearInterval(myProgress);
             progressBar.value = totalSeconds;
@@ -281,35 +319,67 @@ function renderSensors() {
     const container = document.querySelector(".infoContainer");
 
     if (!sensorData.data || sensorData.data.length === 0) {
-        container.innerHTML = "<p>Please run the device to see sensor data.</p>";
+        container.innerHTML =
+            "<p>Please run the device to see sensor data.</p>";
         return;
     }
 
-    container.innerHTML = sensorData.data.map(sensor => `
+    container.innerHTML = sensorData.data
+        .map(
+            (sensor) => `
         <div>
             Sensor ${sensor.sensor}
             <br>
             &nbsp;&nbsp;&nbsp;&nbsp;Data Point: ${sensor.currReading}
         </div>
-    `).join("");
+    `,
+        )
+        .join("");
 }
 
-// downloadable file 
-function exportToCSV() {
-    // grab headers from the keys of the first object
-    const headers = Object.keys(sensorData.data[0]);
-    const rows = sensorData.data.map(s => Object.values(s));
+// ACTUAL EXPORT TO CSV
+// This function will combine all the data returned
+// Along with the answers to the questions the operator answers
+// It should check if the file is empty, and if so then write the
+// headers. If not, it should just simply append the results to the
+// end of the file.
+async function exportToCSV() {
+    // let's get information first
 
-    const csvContent = [headers, ...rows]
-        .map(row => row.join(","))
-        .join("\n");
+    // satisfaction
+    const satisfied = document.querySelector(
+        `input[name="satisfied"]:checked`,
+    ).value;
 
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "sensor_data.csv";
-    a.click();
+    // percent of hair pulled back
+    const percentHair = document.querySelector(
+        `input[name="percentHair"]:checked`,
+    ).value;
 
-    URL.revokeObjectURL(url);
+    // distance
+    const distance = document.getElementById("distance").value;
+
+    const newRow = [satisfied, percentHair, distance];
+
+    const dataObject = {
+        data: newRow,
+    };
+
+    const response = await fetch("/export", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataObject),
+    });
+
+    const data = await response.json();
+
+    return data;
 }
+
+// BUILDING SEND PAYLOAD
+
+// READING RECEIVE PAYLOAD
+
+// PUTTING TOGETHER EXPORT OBJECT
