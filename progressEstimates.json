@@ -5,9 +5,5 @@
         "state2": "0:35",
         "state3": "0:47",
         "state4": "1:00"
-    },
-    "measurements": {
-        "sensor1": 100,
-        "sensor2": 50
     }
 }

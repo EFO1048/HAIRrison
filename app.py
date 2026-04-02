@@ -11,20 +11,7 @@ app = Flask(__name__)
 
 CSV_FILE = "export_data.csv"
 
-# read thread
-arduino_listening_thread = ArduinoListener()
-arduino_listening_thread.start()
 
-# start listening thread to get serial object
-# return self.ser
-board = arduino_listening_thread.connect_board()
-
-# write thread
-arduino_write_thread = ArduinoWrite(board)
-arduino_write_thread.start()
-
-# start listening loop for rest of run
-arduino_listening_thread.run()
 
 
 @app.route("/", methods=["GET"])
@@ -65,13 +52,18 @@ def send():
 # as a string and translate it into utf-8
 @app.route("/receive", methods=["POST"])
 def receive():
+    print('heyyyy')
     res = request.get_json()
-    body = res["data"]
 
-    # data is now in a string, convert to JSON
-    res_data = json.loads(body)
+    print("AFTER RES", res)
+    body = res["height"]
 
-    return res_data
+    print("AFTER INDEX", body)
+
+    if body:
+        return jsonify({"message": "Body returned"})
+    else:
+        return jsonify({"message": "There was an error"})
 
 
 @app.route("/export", methods=["POST"])
@@ -110,4 +102,31 @@ def favicon():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+
+    # start Flask first in background thread
+    flask_thread = threading.Thread(
+        target=lambda: app.run(debug=False, use_reloader=False, port=5000)
+    )
+    flask_thread.daemon = True
+    flask_thread.start()
+
+    # wait for Flask to be ready
+    sleep(2)
+
+    # start Arduino listener - this calls connect_board() and run() internally
+    arduino_listening_thread = ArduinoListener()
+    arduino_listening_thread.start()
+
+    # wait for Arduino to connect
+    sleep(4)
+
+    # grab serial object the listener already opened
+    board = arduino_listening_thread.ser
+
+    # write thread
+    arduino_write_thread = ArduinoWrite(board)
+    arduino_write_thread.start()
+
+    # keep main thread alive
+    while True:
+        sleep(1)

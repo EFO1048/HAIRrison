@@ -12,37 +12,9 @@ const estimateData = {
         sensor2: 50,
     },
 };
-
-// DUMMY TEST DATA FOR SENSORS
-const sensorData = {
-    height: null,
-    runMode: null,
-    state: null,
-    data: [
-        {
-            sensor: 1,
-            currReading: 10,
-        },
-        {
-            sensor: 2,
-            currReading: 78,
-        },
-        {
-            sensor: 3,
-            currReading: 57,
-        },
-        {
-            sensor: 4,
-            currReading: 23,
-        },
-    ],
-};
-
 // fetch estimate data
 
 document.addEventListener("DOMContentLoaded", () => {
-    // going to run once and combine empty logic
-    renderSensors();
 
     // needed to separate these because btn is out of the dom
     const connectBtn = document.getElementById("connectBtn");
@@ -228,14 +200,6 @@ async function fullStop() {
     stopTimer();
 }
 
-async function loadSensorData() {
-    const newData = setInterval(function () {
-        alert("heyyy");
-    }).then(function (response) {
-        return response.json();
-    });
-}
-
 async function testConnection() {
     const button = document.getElementById("connectBtn");
     const contButton = document.getElementById("continueBtn");
@@ -349,29 +313,6 @@ function startProgress(mode, state) {
             progressBar.value = timeElapsed;
         }
     }, 1000);
-}
-
-// this is just rendering, will be called by fetch eventually
-function renderSensors() {
-    const container = document.querySelector(".infoContainer");
-
-    if (!sensorData.data || sensorData.data.length === 0) {
-        container.innerHTML =
-            "<p>Please run the device to see sensor data.</p>";
-        return;
-    }
-
-    container.innerHTML = sensorData.data
-        .map(
-            (sensor) => `
-        <div>
-            Sensor ${sensor.sensor}
-            <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;Data Point: ${sensor.currReading}
-        </div>
-    `,
-        )
-        .join("");
 }
 
 // ACTUAL EXPORT TO CSV

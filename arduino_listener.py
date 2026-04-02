@@ -69,15 +69,19 @@ class ArduinoListener(threading.Thread):
         # MAIN LISTENING LOOP
         # while running, if ser.in_waiting, then readLine
         # https://forum.arduino.cc/t/trying-to-read-serial-data-sent-by-the-board-over-serial-im-at-my-wits-end-here/1327027/6
-        while self.running:
-            if self.ser.in_waiting():
+        while True:
+            if self.ser.is_open:
                 line = self.ser.readline().decode("utf-8").strip()
-                json_data = json.loads(line)
-                if json_data:
-                    try:
-                        # send POST request to localhost server
+                if not line:
+                    continue
+                print("THE LINE: ", line)
+                try:
+                    json_data = json.loads(line)  # ← now safe
+                    if json_data:
                         requests.post(endpoint, json=json_data)
-                    except Exception as e:
-                        print(f"Failed: {e}")
-                # need to wait so thread doesnt get freaked out
-                time.sleep(0.1)
+                except json.JSONDecodeError as e:
+                    print(f"Invalid JSON: {line}")  # ← won't crash, just skips bad lines
+                except Exception as e:
+                    print(f"Failed: {e}")
+                
+            time.sleep(0.1)
