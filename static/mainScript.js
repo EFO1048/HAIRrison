@@ -138,7 +138,44 @@ function disableStateStart() {
     }
 }
 
-async function stateStart(stateNum) {}
+// I don't know why I passed the event but ignore
+// What do I even need to do?
+// Disable every button except for stop
+async function stateStart(event, stateNum) {
+    // disable the rest of the buttons
+    const deviceHeight = document.getElementById("height").value;
+    const stopBtn = document.getElementById("fullStop");
+    const stateBtns = document.getElementsByClassName("stateBtn");
+
+    for (let i = 0; i < 4; i++) {
+        stateBtns[i].disabled = true;
+    }
+
+    stopBtn.disabled = false;
+
+    // send /send POST request and pass stateNum
+    const payload = {
+        height: deviceHeight,
+        runMode: stateNum, // stateByState
+        state: true,
+        data: {},
+    };
+
+    const response = await fetch("/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    startProgress("full");
+
+    startTimer("restart");
+    return data;
+}
 
 async function fullStart() {
     console.log("HELLO");
@@ -154,7 +191,7 @@ async function fullStart() {
     // will need device height included in payload
     const payload = {
         height: deviceHeight,
-        runMode: 0,
+        runMode: 5, // fullWalkthrough
         state: null,
         data: {},
     };
@@ -359,7 +396,9 @@ async function exportToCSV() {
     // distance
     const distance = document.getElementById("distance").value;
 
-    const newRow = [satisfied, percentHair, distance];
+    const timer = document.getElementById("timer").innerHTML;
+
+    const newRow = [satisfied, percentHair, distance, timer];
 
     const dataObject = {
         data: newRow,
@@ -377,9 +416,4 @@ async function exportToCSV() {
 
     return data;
 }
-
-// BUILDING SEND PAYLOAD
-
 // READING RECEIVE PAYLOAD
-
-// PUTTING TOGETHER EXPORT OBJECT

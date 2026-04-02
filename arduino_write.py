@@ -25,8 +25,8 @@ class ArduinoWrite(
 
     def write(self, data):
         if self.ser:
+            print("Board found... writing")
             # ser.write("String here".encode())
             self.ser.write(data.encode("utf-8"))
         else:
-            print("NO BOARD")
             return jsonify({"Error": data})

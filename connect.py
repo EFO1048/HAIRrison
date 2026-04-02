@@ -11,7 +11,6 @@ def find_arduino_port():
     # IDK what arduino would look like
     for p in ports:
         if "Arduino" in p.description or "USB Serial" in p.description:
-            print("FOUND, DETAILS:")
             print(p)
             return p.device
 

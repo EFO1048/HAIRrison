@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 CSV_FILE = "export_data.csv"
 
-
 # read thread
 arduino_listening_thread = ArduinoListener()
 arduino_listening_thread.start()
@@ -58,7 +57,7 @@ def send():
 
     # send to write thread
     arduino_write_thread.write(str_data)
-    return jsonify({"Message": str_data})
+    return jsonify({"message": str_data})
 
 
 # This route will be triggered in the listener thread
@@ -83,23 +82,22 @@ def export():
         "satisfied",
         "percentHairGathered",
         "distance",
+        "time",
     ]
 
     # If empty then write headers
-    with open(CSV_FILE, 'a') as file_obj:
+    with open(CSV_FILE, "a") as file_obj:
         writer = csv.writer(file_obj)
-        
+
         # is empty
         # If file is empty, f.tell() will be 0
         if file_obj.tell() == 0:
             writer.writerow(headers)
-            
+
         # then write next row
         writer.writerow(newrow)
-        
+
     return jsonify({"status": "saved"})
-        
-        
 
 
 @app.route("/favicon.ico")
@@ -112,4 +110,4 @@ def favicon():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)

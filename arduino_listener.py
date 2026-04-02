@@ -25,13 +25,10 @@ class ArduinoListener(threading.Thread):
     def find_arduino_port(self):
         ports = serial.tools.list_ports.comports()
 
-        print("LISTENER STARTING: \n\n\n\n\n", ports)
-
         # https://pyserial.readthedocs.io/en/latest/tools.html#serial.tools.list_ports.ListPortInfo
         # IDK what arduino would look like
         for p in ports:
             if "Arduino" in p.description or "USB Serial" in p.description:
-                print("FOUND, DETAILS:")
                 print(p)
                 return p.device
 
