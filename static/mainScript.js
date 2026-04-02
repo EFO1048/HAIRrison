@@ -182,6 +182,8 @@ async function fullStart() {
 
     startTimer("restart");
 
+    await waitCheckStatus();
+
     return data;
 }
 
@@ -357,4 +359,29 @@ async function exportToCSV() {
 
     return data;
 }
-// READING RECEIVE PAYLOAD
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function waitCheckStatus() {
+    console.log("I AM IN WAIT CHECK");
+
+    let done = false;
+
+    while (!done) {
+        const response = await fetch("http://localhost:5000/checkStatus");
+        const data = await response.json();
+
+        console.log("my data", data);
+
+        if (data.message.message === "DONE") {
+            console.log("done finallya")
+            done = true;
+            return "done";
+        } else {
+            await wait(1000);
+        }
+    }
+    return;
+}

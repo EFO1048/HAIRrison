@@ -11,8 +11,7 @@ app = Flask(__name__)
 
 CSV_FILE = "export_data.csv"
 
-
-
+received_msg = {}
 
 @app.route("/", methods=["GET"])
 def index():
@@ -52,18 +51,24 @@ def send():
 # as a string and translate it into utf-8
 @app.route("/receive", methods=["POST"])
 def receive():
-    print('heyyyy')
     res = request.get_json()
-
-    print("AFTER RES", res)
     body = res["height"]
 
-    print("AFTER INDEX", body)
-
     if body:
+        received_msg["message"] = "DONE"
         return jsonify({"message": "Body returned"})
     else:
         return jsonify({"message": "There was an error"})
+
+@app.route("/checkStatus", methods=["GET"])
+def checkStatus():
+    if (received_msg["message"] == "DONE"):
+        response = jsonify({"message": received_msg})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response    
+    else:
+        return jsonify({"message": "not done"})
+    
 
 
 @app.route("/export", methods=["POST"])

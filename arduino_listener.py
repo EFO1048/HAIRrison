@@ -84,4 +84,4 @@ class ArduinoListener(threading.Thread):
                 except Exception as e:
                     print(f"Failed: {e}")
                 
-            time.sleep(0.1)
+            time.sleep(1)
