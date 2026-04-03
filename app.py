@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 CSV_FILE = "export_data.csv"
 
-received_msg = {}
+received_msg = {"message": None}
 
 @app.route("/", methods=["GET"])
 def index():
@@ -42,7 +42,7 @@ def send():
     str_data = str(data)
 
     # send to write thread
-    arduino_write_thread.write(str_data)
+    arduino_write_thread.write(data)
     return jsonify({"message": str_data})
 
 

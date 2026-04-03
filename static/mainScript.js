@@ -1,7 +1,7 @@
 // DUMMY TEST DATA FOR LATER:
 const estimateData = {
     time: {
-        fullWalkthrough: "0:10",
+        fullWalkthrough: "2:10",
         state1: "1:00",
         state2: "0:35",
         state3: "0:47",
@@ -75,6 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .addEventListener("click", function (event) {
             exportToCSV();
         });
+
+    const progressBar = document.getElementById("progress");
+    progressBar.value = 0;
+    progressBar.max = totalSeconds;
+
 });
 
 // enable all of the state by state buttons
@@ -183,6 +188,16 @@ async function fullStart() {
     startTimer("restart");
 
     await waitCheckStatus();
+
+    // now disable stop button
+    stopBtn.disabled = true;
+    startBtn.disabled = false;
+
+    // re-enable stop button
+
+    // stop timer
+
+    // can we finish progress bar?
 
     return data;
 }

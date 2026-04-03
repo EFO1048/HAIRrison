@@ -26,10 +26,15 @@ class ArduinoWrite(
     def write(self, data):
         if self.ser:
             print("Board found... writing")
-            json_str = json.dumps(data)
+            # json_str = json.dumps(data)
             # ser.write("String here".encode())
-            bytes_written = self.ser.write((json_str + "\n").encode("utf-8"))
-            print("Bytes written:", bytes_written)
-            print("Data sent:", json_str)
+            start_msg = "incoming"
+            height = data["height"]
+            state = data["state"]
+            self.ser.write((start_msg + "\n").encode("utf-8"))
+            time.sleep(1)
+            self.ser.write((height + "\n").encode("utf-8"))
+            time.sleep(1)
+            self.ser.write((state + "\n").encode("utf-8"))
         else:
             return jsonify({"Error": data})
